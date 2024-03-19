@@ -1,0 +1,60 @@
+- name: Configure EC2
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker APT repository
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+        state: present
+
+
+    - name: Install Docker
+      apt:
+        name: docker-ce
+        state: present
+
+    - name: Install pip
+      become: yes
+      apt:
+        name: python3-pip
+        state: present
+
+    - name: Install Docker Python library
+      pip:
+        name: docker
+        state: present
+
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Decrypt Docker credentials
+      ansible.builtin.include_vars: docker_credentials.yml
+      no_log: false
+
+    - name: Docker login
+      become: yes
+      docker_login:
+        username: "{{ docker_username }}"
+        password: "{{ docker_password }}"
+
+    - name: Pull Docker image
+      docker_image:
+        name: rhys7homas/devops-aws
+        source: pull
+
+    - name: Run Docker container
+      docker_container:
+        name: your_container_name
+        image: rhys7homas/devops-aws
+        state: started
+        ports:
+          - "8080:80"
