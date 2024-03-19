@@ -52,6 +52,6 @@ ansible-playbook -i "$EC2_PUBLIC_IP," -u ubuntu --private-key=~/Downloads/devops
 
 # Clean up Terraform resources
 echo "Destroying Terraform resources"
-terraform destroy -auto-approve
+terraform -chdir=terraform destroy -auto-approve
 
 echo "Done"
