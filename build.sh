@@ -27,6 +27,11 @@ docker build -t rhys7homas/devops-aws:$1 .
 docker push rhys7homas/devops-aws:$1
 cd ..
 
+# Update Docker Image Version in ansible/playbook.yml
+OLD_VERSION=$(grep -Po '(?<=v0\.0\.)\d+' ansible/playbook.yml | tail -n 1)
+sed -i "s/v0\.0\.$OLD_VERSION/v0.0.$1/g" ansible/playbook.yml
+
+
 # Initialize Terraform
 echo "Initializing Terraform"
 terraform -chdir=terraform init
