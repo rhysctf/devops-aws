@@ -28,8 +28,9 @@ docker push rhys7homas/devops-aws:$1
 cd ..
 
 # Update Docker Image Version in ansible/playbook.yml
+echo "Updating Docker version in playbook.yml to $1"
 OLD_VERSION=$(grep -Po '(?<=v0\.0\.)\d+' ansible/playbook.yml | tail -n 1)
-sed -i "s/v0\.0\.$OLD_VERSION/v0.0.$1/g" ansible/playbook.yml
+sed -i "s/v0\.0\.$OLD_VERSION/$1/g" ansible/playbook.yml
 
 
 # Initialize Terraform
