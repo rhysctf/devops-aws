@@ -22,16 +22,18 @@ curl -X POST \
 
 # Build new Docker Image
 echo "Building new Docker Image with Image Tag: $1"
+cd ansible
 docker build -t rhys7homas/devops-aws:$1 .
 docker push rhys7homas/devops-aws:$1
+cd ..
 
 # Initialize Terraform
 echo "Initializing Terraform"
-terraform init ./terraform
+terraform -chdir=terraform init
 
 # Provision infrastructure using Terraform
 echo "Provisioning infrastructure using Terraform"
-terraform apply -auto-approve ./terraform
+terraform -chdir=terraform apply -auto-approve
 
 # Extract public IP of the EC2 instance
 echo "Extracting public IP of the EC2 instance"
