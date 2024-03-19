@@ -27,11 +27,11 @@ docker push rhys7homas/devops-aws:$1
 
 # Initialize Terraform
 echo "Initializing Terraform"
-terraform init
+terraform init ./terraform
 
 # Provision infrastructure using Terraform
 echo "Provisioning infrastructure using Terraform"
-terraform apply -auto-approve
+terraform apply -auto-approve ./terraform
 
 # Extract public IP of the EC2 instance
 echo "Extracting public IP of the EC2 instance"
