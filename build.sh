@@ -1,6 +1,11 @@
 #!/bin/bash
 # ./build.sh v1.0.0 "this is the github commit code"
 
+# Update Docker Image Version in ansible/playbook.yml
+echo "Updating Docker version in playbook.yml to $1"
+OLD_VERSION=$(grep -Po '(?<=v0\.0\.)\d+' ansible/playbook.yml | tail -n 1)
+sed -i "s/v0\.0\.$OLD_VERSION/$1/g" ansible/playbook.yml
+
 # Commit changes to GitHub
 echo "Committing changes to GitHub with commit message: $2"
 git add .
@@ -24,12 +29,6 @@ curl -X POST \
 echo "Building new Docker Image with Image Tag: $1"
 docker build -t rhys7homas/devops-aws:$1 -f ansible/Dockerfile .
 docker push rhys7homas/devops-aws:$1
-
-# Update Docker Image Version in ansible/playbook.yml
-echo "Updating Docker version in playbook.yml to $1"
-OLD_VERSION=$(grep -Po '(?<=v0\.0\.)\d+' ansible/playbook.yml | tail -n 1)
-sed -i "s/v0\.0\.$OLD_VERSION/$1/g" ansible/playbook.yml
-
 
 # Initialize Terraform
 echo "Initializing Terraform"

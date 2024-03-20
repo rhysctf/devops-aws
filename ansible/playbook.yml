@@ -48,13 +48,13 @@
 
     - name: Pull Docker image
       docker_image:
-        name: rhys7homas/devops-aws:v0.0.9
+        name: rhys7homas/devops-aws:v0.0.11
         source: pull
 
     - name: Run Docker container
       docker_container:
         name: your_container_name
-        image: rhys7homas/devops-aws:v0.0.9
+        image: rhys7homas/devops-aws:v0.0.11
         state: started
         ports:
           - "8080:80"
