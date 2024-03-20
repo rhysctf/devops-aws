@@ -22,10 +22,8 @@ curl -X POST \
 
 # Build new Docker Image
 echo "Building new Docker Image with Image Tag: $1"
-cd ansible
-docker build -t rhys7homas/devops-aws:$1 .
+docker build -t rhys7homas/devops-aws:$1 -f ansible/Dockerfile .
 docker push rhys7homas/devops-aws:$1
-cd ..
 
 # Update Docker Image Version in ansible/playbook.yml
 echo "Updating Docker version in playbook.yml to $1"
