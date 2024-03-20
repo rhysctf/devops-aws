@@ -1,3 +1,3 @@
 FROM nginx:latest
 
-COPY .. /usr/share/nginx/html
+COPY ../devops-aws /usr/share/nginx/html

@@ -57,7 +57,7 @@ echo "Running Ansible playbook to configure the EC2 instance"
 ansible-playbook -i "$EC2_PUBLIC_IP," -u ubuntu --private-key=~/Downloads/devops-key-pair.pem ansible/playbook.yml
 
 # Clean up Terraform resources
-echo "Destroying Terraform resources"
-terraform -chdir=terraform destroy -auto-approve
+# echo "Destroying Terraform resources"
+# terraform -chdir=terraform destroy -auto-approve
 
 echo "Done"
